@@ -17,7 +17,7 @@ class UsersController < ApplicationController
         token = JsonWebToken.encode(user_id: @user.id)
         time = Time.now + 24.hours.to_i
         render json: { token: token, exp: time.strftime("%m-%d-%Y %H:%M"),
-                       username: @user.name, user_id: @user_id }, status: :ok
+                       name: @user.name, user_id: @user_id }, status: :ok
     else
       render json: { errors: @user.errors.full_messages },
              status: :unprocessable_entity
@@ -37,13 +37,13 @@ class UsersController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def find_user
-      @user = User.find_by_username!(params[:_username])
+      @user = User.find_by_name!(params[:_name])
     rescue ActiveRecord::RecordNotFound
       render json: { errors: 'User not found' }, status: :not_found
     end
 
     # Only allow a list of trusted parameters through.
     def user_params
-      params.require(:user).permit(:name, :email, :password, :password_confirmation)
+      params.permit(:name, :email, :password, :password_confirmation)
     end
 end
