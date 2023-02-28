@@ -81,7 +81,7 @@ test:
 #
 production:
   <<: *default
-  url: <%= ENV[‘DATABASE_URL’] %>
+  url: <%= ENV["DATABASE_URL"] %>
   database: pet_shop_management_system_rails_production
   username: pet_shop_management_system_rails
   password: <%= ENV["PET_SHOP_MANAGEMENT_SYSTEM_RAILS_DATABASE_PASSWORD"] %>
